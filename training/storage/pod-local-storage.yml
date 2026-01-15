@@ -1,0 +1,16 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-with-local-storage
+spec:
+  containers:
+  - name: app-1
+    image: busybox
+    command: ["sh","-c","echo 'hello naresh'; sleep 3600"]
+    volumeMounts:
+    - name: local-storage-data
+      mountPath: /data
+  volumes:
+  - name: local-storage-data
+    persistentVolumeClaim:
+      claimName: pvc-claim-local-storage

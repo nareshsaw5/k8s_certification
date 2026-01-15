@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dc12
+  name: dc12
+  namespace: mc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dc12
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dc12
+    spec:
+      containers:
+      - image: httpd
+        name: httpd
+      initContainers:
+      - image: busybox
+        name: busybox-1
+        command: ["/bin/sh","-c","sleep 20"]
+          
+

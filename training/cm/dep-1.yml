@@ -1,0 +1,9 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app1
+spec:
+  containers:
+  - name: webapp
+    image: httpd
+

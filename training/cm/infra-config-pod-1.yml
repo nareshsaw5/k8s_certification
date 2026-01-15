@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: po
+  name: infra-config-app
+  namespace: cm
+spec:
+  containers:
+    image: busybox
+    name: infra-config-app-1
+        
+
+

@@ -1,0 +1,25 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: reader-writer-app
+  namespace: vol
+
+spec:
+  volumes:
+  - name: cache
+    emptyDir: {}
+  containers:
+  - name: writer
+    image: busybox
+    command: ["sh","-c","while true; do echo 'from writer' > /cache/data; sleep 10; done"]
+    volumeMounts:
+    - name: cache
+      mountPath: /cache
+
+  - name: reader
+    image: busybox
+    command: ["sh", "-c", "while true; do tail -f -n 1 /cache/data; sleep 10; done"]
+    volumeMounts:
+    - name: cache
+      mountPath: /cache    
+
