@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: pv-vol-3
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 50Mi
+  hostPath:
+    path: /tmp/pv-vol-3
+  persistentVolumeReclaimPolicy: Retain
+
+
+  

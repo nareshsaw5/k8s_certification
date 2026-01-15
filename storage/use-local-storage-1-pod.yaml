@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: use-local-storage-1
+  name: use-local-storage-1
+spec:
+  containers:
+  - image: nginx
+    name: use-local-storage-1
+    volumeMounts:
+    - name: local-storage-volume
+      mountPath: /var/local-storage
+  volumes:
+  - name: local-storage-volume
+    persistentVolumeClaim:
+      claimName: pvc-vol-3
