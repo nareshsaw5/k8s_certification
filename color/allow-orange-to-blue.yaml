@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-orange-to-blue
+  namespace: color
+spec:
+  podSelector:
+    matchLabels:
+      run: orange
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          run: blue
+    ports:
+    - protocol: TCP
+      port: 80
+
+
