@@ -1,0 +1,24 @@
+spec: 
+  containers:
+  - name: web-1
+    image: nginx
+    env:
+    - name: PASSWORD
+      valueFrom:
+        configMapKeyRef:
+          name: cm-env
+          key: MYSQL_ROOT_PASSWORD
+  - name: web-2
+    image: httpd
+    env:
+    - name: PASSWORD
+      valueFrom:
+         configMapKeyRef:
+           name: cm-env
+           key: MYSQL_ROOT_PASSWORD    
+
+metadata:
+  name: app6
+  namespace: cm
+apiVersion: v1
+kind: Pod

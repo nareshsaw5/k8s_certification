@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dep20
+  name: dep20
+  namespace: limit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dep20
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: dep20
+    spec:
+      containers:
+      - image: httpd
+        name: httpd
+        resources: {}

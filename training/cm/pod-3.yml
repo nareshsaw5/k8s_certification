@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app2
+  namespace: cm
+spec:
+  containers:
+  - name: web
+    image: httpd
+    env:
+    - name: PWD
+      value: hello1!
+    - name: PORT
+      value: "8080"
+    - name: SERVICE_PORT
+      value: "8484"
+
+
+      

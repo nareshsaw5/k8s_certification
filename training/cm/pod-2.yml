@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app1
+  namespace: cm
+spec:
+  containers:
+    - name: web
+      image: httpd
+

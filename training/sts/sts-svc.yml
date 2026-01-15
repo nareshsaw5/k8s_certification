@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: llc1
+  ports:
+    - port: 80
