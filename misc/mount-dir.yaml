@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: mount-dir
+  name: mount-dir
+spec:
+  volumes:
+  - name: config-vol
+    configMap:
+      name: dir-config
+  containers:
+  - image: nginx
+    name: mount-dir
+    volumeMounts:
+    - name: config-vol
+      mountPath: /etc/config/processor.yaml
+      subPath: processor.yaml
+    - name: config-vol
+      mountPath: /etc/configs

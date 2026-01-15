@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app3
+  labels:
+    type: nginx
+    role: frontend
+    bu: infra-config   
+
+spec:
+  containers:
+    - name: app3
+      image: nginx
+

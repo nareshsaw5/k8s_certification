@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: env-from-pod
+  name: env-from-pod
+  namespace: cm
+spec:
+  restartPolicy: Never
+  containers:
+  - command:
+    - sh
+    - -c
+    - env
+    envFrom:
+    - configMapRef:
+        name: special-config
+    image: busybox
+    imagePullPolicy: Always
+    name: env-from-pod

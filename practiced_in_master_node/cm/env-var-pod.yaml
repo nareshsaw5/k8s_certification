@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: env-var-pod
+  name: env-var-pod
+  namespace: cm
+spec:
+  restartPolicy: Never
+  containers:
+  - image: busybox
+    name: env-var-pod
+    command:
+    - sh
+    - -c
+    - "env"
+    env:
+    - name: SPECIAL_LEVEL_KEY
+      valueFrom:
+        configMapKeyRef:
+          name: special-config
+          key: SPECIAL_LEVEL
+
+    - name: SPECIAL_TYPE_KEY
+      valueFrom:
+        configMapKeyRef:
+          name: special-config
+          key: SPECIAL_TYPE

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: co-located
+  name: co-located
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: co-located
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: co-located
+    spec:
+      volumes:
+      - name: log
+        emptyDir: {}
+      containers:
+      - image: busybox
+        name: c1
+        command:
+        - sh
+        - -c
+        - "while true; do echo $(date) >> /log/date.log; sleep 1; done;"
+        volumeMounts:
+        - name: log
+          mountPath: /log
+      - image: busybox
+        name: c2
+        command:
+        - sh
+        - -c
+        - "tail -f /log/date.log" 
+        volumeMounts:
+        - name: log
+          mountPath: /log

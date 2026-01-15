@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: processor
+  name: processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: processor
+    spec:
+      volumes:
+      - name: shared
+        emptyDir: {}
+      containers:    
+      - image: busybox
+        name: inbox
+        command:
+        - sh
+        - -c
+        - "while true; do echo $(date) >> /data/in; sleep 2; done;"
+        volumeMounts:
+        - name: shared
+          mountPath: /data  
+      - image: busybox
+        name: worker
+        command:
+        - sh
+        - -c
+        - "while true; do cat /data/in; sleep 2; done;"
+        volumeMounts:
+        - name: shared
+          mountPath: /data

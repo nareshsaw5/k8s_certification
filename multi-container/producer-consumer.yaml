@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: produce-consumer
+  name: produce-consumer
+spec:
+  containers:
+  - image: busybox
+    name: producer
+    command: ['sh','-c',"while true; do echo $(date) >> /var/log/date.log; sleep 2; done;"]
+    volumeMounts:
+    - name: log
+      mountPath: /var/log
+  initContainers:  
+  - image: busybox
+    name: consumer
+    command: ['sh','-c'," tail -f /var/log/date.log; sleep 2;"]
+    restartPolicy: Always
+    volumeMounts:
+    - name: log
+      mountPath: /var/log
+  volumes:
+  - name: log
+    emptyDir: {}
+
+

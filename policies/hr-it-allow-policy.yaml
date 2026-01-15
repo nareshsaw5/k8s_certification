@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: it-hr-policy
+  namespace: hr
+spec:
+  podSelector:
+    matchLabels:
+      app: hr-app # applicable on these pods
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: it # allow from it namespace on port 80
+      ports:
+      - port: 80
+        protocol: TCP 
+
+  policyTypes:
+  - Ingress

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: multi
+  name: multi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multi
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: multi
+    spec:
+      volumes:
+      - name: shared
+        emptyDir: {}
+      - name: backup
+        emptyDir: {}
+      containers:
+      - image: busybox
+        name: main
+        command:
+        - sh
+        - -c
+        - "while true; do echo $(date) >> /shared/time.log; sleep 5; done;"
+        volumeMounts:
+        - name: shared
+          mountPath: /shared
+      initContainers:
+      - image: busybox
+        name: sidecar
+        restartPolicy: Always
+        command:
+        - sh
+        - -c
+        - "while true; do cp /shared/time.log /backup/log.txt; sleep 5; done;"
+        volumeMounts:
+        - name: shared
+          mountPath: /shared
+        - name: backup
+          mountPath: /backup
+
+

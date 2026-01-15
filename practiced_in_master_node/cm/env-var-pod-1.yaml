@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    cni.projectcalico.org/containerID: 0641d3c5d6fb06707fbdb37975b2e7c014ae674172c8b5374335aa3d9e41ebff
+    cni.projectcalico.org/podIP: 192.168.77.148/32
+    cni.projectcalico.org/podIPs: 192.168.77.148/32
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"run":"env-var-pod"},"name":"env-var-pod","namespace":"cm"},"spec":{"containers":[{"command":["sh","-c","env"],"env":[{"name":"SPECIAL_LEVEL_KEY","valueFrom":{"configMapKeyRef":{"key":"SPECIAL_LEVEL","name":"special-config"}}},{"name":"SPECIAL_TYPE_KEY","valueFrom":{"configMapKeyRef":{"key":"SPECIAL_TYPE","name":"special-config"}}}],"image":"busybox","name":"env-var-pod"}]}}
+  creationTimestamp: "2025-12-12T08:50:55Z"
+  generation: 1
+  labels:
+    run: env-var-pod
+  name: env-var-pod
+  namespace: cm
+  resourceVersion: "1039233"
+  uid: 742f8dfc-8e38-4e6b-a0a8-a3f25a33a2b8
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - env
+    env:
+    - name: SPECIAL_LEVEL_KEY
+      valueFrom:
+        configMapKeyRef:
+          key: SPECIAL_LEVEL
+          name: special-config
+    - name: SPECIAL_TYPE_KEY
+      valueFrom:
+        configMapKeyRef:
+          key: SPECIAL_TYPE
+          name: special-config
+    image: busybox
+    imagePullPolicy: Always
+    name: env-var-pod
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tcn7s
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: master-node
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-tcn7s
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-12T08:51:00Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-12T08:50:55Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-12T08:50:55Z"
+    message: 'containers with unready status: [env-var-pod]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-12T08:50:55Z"
+    message: 'containers with unready status: [env-var-pod]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-12-12T08:50:55Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://8cf60ff78d10e8a3fdb3956be3e41c609b1f8a4384ce66bf5dc7a815692e4d0d
+    image: docker.io/library/busybox:latest
+    imageID: docker.io/library/busybox@sha256:d80cd694d3e9467884fcb94b8ca1e20437d8a501096cdf367a5a1918a34fc2fd
+    lastState:
+      terminated:
+        containerID: containerd://8cf60ff78d10e8a3fdb3956be3e41c609b1f8a4384ce66bf5dc7a815692e4d0d
+        exitCode: 0
+        finishedAt: "2025-12-12T08:56:59Z"
+        reason: Completed
+        startedAt: "2025-12-12T08:56:59Z"
+    name: env-var-pod
+    ready: false
+    resources: {}
+    restartCount: 6
+    started: false
+    state:
+      waiting:
+        message: back-off 5m0s restarting failed container=env-var-pod pod=env-var-pod_cm(742f8dfc-8e38-4e6b-a0a8-a3f25a33a2b8)
+        reason: CrashLoopBackOff
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        - 10
+        uid: 0
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-tcn7s
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 192.168.0.47
+  hostIPs:
+  - ip: 192.168.0.47
+  phase: Running
+  podIP: 192.168.77.148
+  podIPs:
+  - ip: 192.168.77.148
+  qosClass: BestEffort
+  startTime: "2025-12-12T08:50:55Z"

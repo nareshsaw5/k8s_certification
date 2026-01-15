@@ -1,0 +1,11 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app5-prod
+  namespace: prod
+spec:
+   nodeSelector:
+     env: prod
+   containers:
+   - name: app5-in-prod
+     image: nginx  

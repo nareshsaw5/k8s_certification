@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: init-setup
+  name: init-setup
+spec:
+  volumes:
+  - name: data
+    emptyDir: {}
+  initContainers:
+  - image: busybox
+    name: init-setup
+    resources:
+      requests:
+        memory: 1Mi
+      limits:
+        memory: 1Gi    
+    command:
+    - sh
+    - -c
+    - "echo 'Hello' >> /data/file.txt "
+    volumeMounts:
+    - name: data
+      mountPath: /data
+
+  containers:
+  - image: busybox
+    name: app
+    command:
+    - sh
+    - -c
+    - "cat /data/file.txt; sleep 1d;"
+    volumeMounts:
+    - name: data
+      mountPath: /data

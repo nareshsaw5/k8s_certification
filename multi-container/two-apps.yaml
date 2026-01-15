@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: two-apps
+  name: two-apps
+spec:
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
+  containers:
+  - image: busybox
+    name: one
+    command:
+    - sh
+    - -c
+    - "while true; do echo 'hello' >> /var/log/hello.txt; sleep 5; done;"
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /var/log
+
+  - image: busybox
+    name: two
+    command:
+    - sh
+    - -c
+    - "while true; do echo 'hello' >> /var/data/hello.txt; sleep 5; done;"
+    volumeMounts:
+    - name: shared-volume
+      mountPath: /var/data
+

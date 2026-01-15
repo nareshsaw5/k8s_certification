@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: it-service
+  namespace: it
+spec:
+  ports:
+  - name: tcp-port
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: it-app
+  type: ClusterIP

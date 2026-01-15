@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hr-policy
+  namespace: hr
+spec:
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: hr-app
+      ports:
+      - port: 80
+        protocol: TCP       
+  policyTypes:
+  - Ingress

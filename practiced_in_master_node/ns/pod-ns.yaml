@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app2
+  namespace: dev  
+spec:
+  containers:
+    - name: app2
+      image: nginx
+      env:
+        - name: user
+          value: naresh
+
+

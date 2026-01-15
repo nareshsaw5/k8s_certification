@@ -1,0 +1,72 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: my-storage-class
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 50Mi
+  local:
+    path: /mnt/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname 
+          operator: In
+          values:
+          - master-node
+  storageClassName: my-storage-class
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+  namespace: pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 40Mi
+  storageClassName: my-storage-class
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-deploy
+  namespace: pv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc-deploy
+  template:
+    metadata:
+      labels:
+        app: pvc-deploy
+    spec:
+      volumes:
+      - name: pvc-vol
+        persistentVolumeClaim:
+          claimName: my-pvc
+      containers:
+      - image: busybox
+        name: busybox
+        command:
+        - sh
+        - -c
+        - "echo 'i am using pvc as storage'; sleep 1d"
+        volumeMounts:
+        - name: pvc-vol
+          mountPath: /data
+

@@ -1,0 +1,16 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app4
+  labels:
+    role: frontend
+
+spec:
+  nodeSelector:
+    env: qa
+  containers:
+    - name: frontend-1
+      image: nginx
+      ports:
+      - containerPort: 81  
+

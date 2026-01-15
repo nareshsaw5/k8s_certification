@@ -1,0 +1,9 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app3
+spec:
+  containers:
+    - name: app3
+      image: nginx
+

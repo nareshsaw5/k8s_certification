@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: app10
+spec:
+  volumes:
+    - name: vol10
+      persistentVolumeClaim:
+        claimName: pvc1
+  containers:  
+  - name: app10
+    image: nginx
+    volumeMounts:
+    - name: vol10
+      mountPath: /mnt

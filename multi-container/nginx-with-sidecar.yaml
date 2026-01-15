@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-with-sidecar
+  name: nginx-with-sidecar
+spec:
+  volumes:
+  - name: nginx-log
+    emptyDir: {}
+  containers:
+  - image: nginx
+    name: nginx
+    volumeMounts:
+    - name: nginx-log
+      mountPath: /var/log/nginx
+  - image: busybox
+    name: log-sidecar
+    command:
+    - sh
+    - -c
+    - |
+      while true; do
+        echo "---- log dump ----"
+        ls -l /var/log/nginx
+        cat /var/log/nginx/access.log 2>/dev/null
+        cat /var/log/nginx/error.log 2>/dev/null
+        sleep 2
+      done
+    volumeMounts:
+    - name: nginx-log
+      mountPath: /var/log/nginx  

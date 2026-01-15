@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test-cm-mount
+  name: test-cm-mount
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-cm-mount
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test-cm-mount
+    spec:
+      volumes:
+      - name: cm-vol
+        configMap:
+          name: dir-config
+      containers:
+      - image: nginx
+        name: nginx
+        envFrom:
+        - configMapRef:
+            name: app-config
+        env:
+        - name: DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: webdata
+              key: domain
+        volumeMounts:
+        - name: cm-vol
+          mountPath: /var/config

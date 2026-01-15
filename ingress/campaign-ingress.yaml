@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: campaign
+  namespace: marketing
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: local.survey.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: campaign-svc
+            port:
+              number: 80
+        path: /campaign
+        pathType: Prefix
+status:
+  loadBalancer: {}

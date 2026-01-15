@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bigger-memory
+  name: bigger-memory
+  namespace: cpu-memory
+spec:
+  selector:
+    matchLabels:
+      app: bigger-memory
+  template:
+    metadata:
+      labels:
+        app: bigger-memory
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - echo 'I need bigger memory'; sleep 1d
+        image: busybox
+        imagePullPolicy: Always
+        name: busybox
+        resources:
+          requests:
+            memory: 1Mi

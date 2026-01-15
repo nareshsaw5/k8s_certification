@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: wait-then-run
+  name: wait-then-run
+spec:
+  initContainers:
+  - image: busybox
+    name: init
+    command:
+    - sh
+    - -c
+    - "echo 'Hey I am init containerd. waiting for 10 seconds'; sleep 10;"
+
+  containers:
+  - image: busybox
+    name: main
+    command:
+    - sh
+    - -c
+    - "echo done; sleep 1d;"

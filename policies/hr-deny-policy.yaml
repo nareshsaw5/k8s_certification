@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hr-default-deny
+  namespace: hr
+spec:
+  podSelector: {}   # Selects all pods in hr namespace
+  policyTypes:
+  - Ingress
